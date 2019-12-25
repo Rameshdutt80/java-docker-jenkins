@@ -1,17 +1,14 @@
 FROM ubuntu
+MAINTAINER Ramesh Dutt C
 
-MAINTAINER RameshDutt
+RUN apt-get install -y software-properties-common python
+RUN add-apt-repository ppa:chris-lea/node.js
+RUN echo "deb http://us.archive.ubuntu.com/ubuntu/ precise universe" >> /etc/apt/sources.list
+RUN apt-get update
+RUN apt-get install -y nodejs
+#RUN apt-get install -y nodejs=0.6.12~dfsg1-1ubuntu1
+RUN mkdir /var/www
 
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
+ADD app.js /var/www/app.js
 
-RUN echo "deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen" | tee -a /etc/apt/sources.list.d/10gen.list
-
-RUN apt update
-
-RUN apt -y install apt-utils
-
-RUN apt -y install mongodb-10gen
-
-#RUN echo "" >> /etc/mongodb.conf
-
-CMD ["/usr/bin/mongod", "--config", "/etc/mongodb.conf"] 
+CMD ["/usr/bin/node", "/var/www/app.js"]
