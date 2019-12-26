@@ -9,7 +9,7 @@ node{
    }
    stage('Build Docker Image'){
        
-       sh 'docker build -t rameshdutt80/sql:1.0 sqlimage'
+       sh 'docker build -t rameshdutt80/sql:1.0 .'
    }
    stage('Upload Image to DockerHub'){
        withCredentials([usernamePassword(credentialsId: 'gitdockerpwd', passwordVariable: 'dkpwd', usernameVariable: 'dkuser')]) {
