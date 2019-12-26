@@ -1,14 +1,9 @@
 FROM ubuntu
 MAINTAINER Ramesh Dutt C
 
-RUN apt-get install -y software-properties-common python
-RUN add-apt-repository ppa:chris-lea/node.js
-RUN echo "deb http://us.archive.ubuntu.com/ubuntu/ precise universe" >> /etc/apt/sources.list
-RUN apt-get update
-RUN apt-get install -y nodejs
-#RUN apt-get install -y nodejs=0.6.12~dfsg1-1ubuntu1
-RUN mkdir /var/www
+RUN apt-get update && apt-get install -y \
+	apt-file \
+	--no-install-recommends \
+	&& rm -rf /var/lib/apt/lists/*
 
-ADD app.js /var/www/app.js
-
-CMD ["/usr/bin/node", "/var/www/app.js"]
+CMD [ "bash" ]
