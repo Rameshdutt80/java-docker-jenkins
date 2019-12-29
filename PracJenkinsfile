@@ -9,16 +9,15 @@ node{
    }
    stage('Build Docker Image'){
        
-       sh 'docker build -t rameshdutt80/sql:1.0 .'
+       sh 'docker build -t rameshdutt80/mongodb:1.0 .'
    }
    stage('Upload Image to DockerHub'){
        withCredentials([usernamePassword(credentialsId: 'gitdockerpwd', passwordVariable: 'dkpwd', usernameVariable: 'dkuser')]) {
            sh "docker login -u rameshdutt80 -p ${dkpwd}"
         }
-        sh 'docker push rameshdutt80/mysql:1.0'
+        sh 'docker push rameshdutt80/mongodb:1.0'
    }
    stage('Run Container'){
-       sh label: '', script: 'docker rm $(docker ps -a -q)'
-	   sh label: '', script: 'docker rmi $(docker images)'
+       sh label: '', script: 'docker run -d rameshdutt80/mongodb:1.0'
    }
 }
